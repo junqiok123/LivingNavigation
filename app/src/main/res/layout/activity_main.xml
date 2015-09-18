@@ -1,0 +1,192 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F7F4F0"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.zzt.inbox.widget.InboxBackgroundScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="always"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone" />
+
+                <WebView
+                    android:id="@+id/hello_world"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/solid_bg"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ding_dan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_avatar_bar">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/keyline_1"
+                        android:layout_marginLeft="@dimen/keyline_1"
+                        android:layout_marginTop="@dimen/keyline_1"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_group_order_enable"
+                        android:drawablePadding="@dimen/keyline_1"
+                        android:gravity="center_vertical"
+                        android:text="逗比猜一猜" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/keyline_1"
+                        android:drawablePadding="@dimen/keyline_1"
+                        android:drawableRight="@drawable/ic_global_arrow_right_2px"
+                        android:text="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/yuding"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_avatar_bar">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/keyline_1"
+                        android:layout_marginLeft="@dimen/keyline_1"
+                        android:layout_marginTop="@dimen/keyline_1"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_reserve_order_enable"
+                        android:drawablePadding="@dimen/keyline_1"
+                        android:gravity="center_vertical"
+                        android:text="无聊机器人" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginRight="@dimen/keyline_1"
+                        android:drawablePadding="@dimen/keyline_1"
+                        android:drawableRight="@drawable/ic_global_arrow_right_2px"
+                        android:text="" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tuijian"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/card_avatar_bar">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/keyline_1"
+                        android:layout_marginLeft="@dimen/keyline_1"
+                        android:layout_marginTop="@dimen/keyline_1"
+                        android:layout_weight="1"
+                        android:drawableLeft="@drawable/ic_order_account_recommend_enable"
+                        android:drawablePadding="@dimen/keyline_1"
+                        android:text="笑话大全" />
+
+                    <ImageView
+                        android:id="@+id/subway_new"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/subway_new_flag"
+                        android:visibility="invisible" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="@dimen/keyline_1"
+                        android:baselineAlignBottom="@id/subway_new"
+                        android:src="@drawable/ic_global_arrow_right_2px" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/solid_bg"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="asdasd" />
+                </LinearLayout>
+            </LinearLayout>
+        </com.zzt.inbox.widget.InboxBackgroundScrollView>
+
+        <com.zzt.inbox.widget.InboxLayoutListView
+            android:id="@+id/inboxlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <com.zzt.inbox.widget.InboxLayoutScrollView
+            android:id="@+id/guesslayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/guess_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="逗比猜一猜" />
+        </com.zzt.inbox.widget.InboxLayoutScrollView>
+
+        <com.zzt.inbox.widget.InboxLayoutScrollView
+            android:id="@+id/robotlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/robot_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:text="逗比猜一猜asdasdasd" />
+        </com.zzt.inbox.widget.InboxLayoutScrollView>
+
+    </FrameLayout>
+
+</LinearLayout>
