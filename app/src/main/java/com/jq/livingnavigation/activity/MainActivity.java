@@ -4,11 +4,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.webkit.WebView;
+import android.webkit.WebSettings;
 import android.widget.LinearLayout;
 
 import com.jq.livingnavigation.R;
 import com.jq.livingnavigation.config.Constant;
+import com.jq.livingnavigation.view.ProgressWebView;
 import com.zzt.inbox.interfaces.OnDragStateChangeListener;
 import com.zzt.inbox.widget.InboxBackgroundScrollView;
 import com.zzt.inbox.widget.InboxLayoutBase;
@@ -17,7 +18,7 @@ import com.zzt.inbox.widget.InboxLayoutScrollView;
 public class MainActivity extends ActionBarActivity {
 
     private InboxLayoutScrollView guessLayout, robotLayout;
-    private WebView webView;
+    private ProgressWebView webView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,8 +106,24 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        webView = (WebView) findViewById(R.id.hello_world);
-        webView.getSettings().setJavaScriptEnabled(true);
+        webView = (ProgressWebView) findViewById(R.id.hello_world);
+        WebSettings ws = webView.getSettings();
+        ws.setJavaScriptEnabled(true);
+        ws.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        ws.setUseWideViewPort(true);
+        ws.setLoadWithOverviewMode(true);
+        ws.setLoadsImagesAutomatically(true);
+//        webView.setHorizontalScrollBarEnabled(false);//设置水平滚动条
+//        webView.setVerticalScrollBarEnabled(false);//设置竖直滚动条
         webView.loadUrl(Constant.HELLO_WORLD_URL);
+//        webView.loadUrl(Constant.HELLO_WORLD_URL);
+//        webView.loadDataWithBaseURL(null, Constant.HELLO_WORLD_URL, "text/html", "utf-8", null);
+//        webView.setWebViewClient(new WebViewClient() {
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                //  重写此方法表明点击网页里面的链接还是在当前的webview里跳转，不跳到浏览器那边
+//                view.loadUrl(url);
+//                return true;
+//            }
+//        });
     }
 }

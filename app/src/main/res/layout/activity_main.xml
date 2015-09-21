@@ -27,17 +27,18 @@
                     android:scaleType="centerCrop"
                     android:visibility="gone" />
 
-                <WebView
+                <com.jq.livingnavigation.view.ProgressWebView
                     android:id="@+id/hello_world"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:visibility="gone" />
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/solid_bg"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
