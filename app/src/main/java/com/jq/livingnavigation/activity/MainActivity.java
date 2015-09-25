@@ -1,5 +1,6 @@
 package com.jq.livingnavigation.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -103,6 +104,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 //                inboxLayoutListView.openWithAnim(tuijian);
+                startActivity(new Intent(MainActivity.this, LocationActivity.class));
             }
         });
 

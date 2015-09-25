@@ -1,9 +1,14 @@
 package com.jq.livingnavigation.activity;
 
 import android.app.Activity;
+import android.location.Location;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.location.LocationManagerProxy;
+import com.amap.api.location.LocationProviderProxy;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -11,15 +16,20 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.jq.livingnavigation.R;
 import com.jq.livingnavigation.utils.LogUtil;
+import com.jq.livingnavigation.utils.ToastUtil;
 
 import java.util.List;
 
-public class LocationActivity extends Activity {
+public class LocationActivity extends Activity implements AMapLocationListener {
 
     private TextView textView;
 
+    //百度
     public LocationClient mLocationClient = null;
     public BDLocationListener myListener = new MyLocationListener();
+
+    //高德
+    private LocationManagerProxy mLocationManagerProxy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +41,13 @@ public class LocationActivity extends Activity {
         mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
         mLocationClient.registerLocationListener(myListener);    //注册监听函数
 
-        initLocation();
-        mLocationClient.start();
+//        initLocation();
+//        mLocationClient.start();
+
+        init();
     }
 
+    // 百度
     private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy
@@ -122,4 +135,65 @@ public class LocationActivity extends Activity {
             mLocationClient.stop();
         }
     }
+
+    //高德
+    private void init() {
+        mLocationManagerProxy = LocationManagerProxy.getInstance(this);
+        //此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+        //注意设置合适的定位时间的间隔，并且在合适时间调用removeUpdates()方法来取消定位请求
+        //在定位结束后，在合适的生命周期调用destroy()方法
+        //其中如果间隔时间为-1，则定位只定一次
+        mLocationManagerProxy.requestLocationData(
+                LocationProviderProxy.AMapNetwork, -1, 15, this);
+        mLocationManagerProxy.setGpsEnable(false);
+
+    }
+
+    private void stopLocation() {
+        if (mLocationManagerProxy != null) {
+            mLocationManagerProxy.removeUpdates(this);
+            mLocationManagerProxy.destroy();
+        }
+        mLocationManagerProxy = null;
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation != null && aMapLocation.getAMapException().getErrorCode() == 0) {
+            //获取位置信息
+            Double geoLat = aMapLocation.getLatitude();
+            Double geoLng = aMapLocation.getLongitude();
+            StringBuffer b = new StringBuffer();
+            b.append(aMapLocation.getAdCode()).append(",").append(aMapLocation.getAddress()).append(",").append(aMapLocation.getAMapException()).append(",")
+                    .append(aMapLocation.getCity()).append(",").append(aMapLocation.getCityCode()).append(",").append(aMapLocation.getCountry()).append(",")
+                    .append(aMapLocation.getDistrict()).append(",").append(aMapLocation.getFloor()).append(",").append(aMapLocation.getPoiId()).append(",")
+                    .append(aMapLocation.getPoiName()).append(",").append(aMapLocation.getPoiId()).append(",").append(aMapLocation.getProvince()).append(",")
+                    .append(aMapLocation.getRoad()).append(",");
+            LogUtil.e("AMapLocation", b.toString());
+        } else {
+            ToastUtil.show(LocationActivity.this, "定位失败，请重试!");
+        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+
 }

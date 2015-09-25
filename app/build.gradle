@@ -42,4 +42,5 @@ dependencies {
     compile project(':inboxlibrary')
     compile files('libs/BaiduLBS_Android.jar')
     compile 'com.google.code.gson:gson:2.3.1'
+    compile files('libs/AMap_Location_v1.4.1_20150917.jar')
 }
