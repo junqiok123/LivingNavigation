@@ -5,6 +5,10 @@ import android.location.Location;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocalDayWeatherForecast;
+import com.amap.api.location.AMapLocalWeatherForecast;
+import com.amap.api.location.AMapLocalWeatherListener;
+import com.amap.api.location.AMapLocalWeatherLive;
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.location.LocationManagerProxy;
@@ -20,7 +24,7 @@ import com.jq.livingnavigation.utils.ToastUtil;
 
 import java.util.List;
 
-public class LocationActivity extends Activity implements AMapLocationListener {
+public class LocationActivity extends Activity implements AMapLocationListener, AMapLocalWeatherListener {
 
     private TextView textView;
 
@@ -147,6 +151,7 @@ public class LocationActivity extends Activity implements AMapLocationListener {
                 LocationProviderProxy.AMapNetwork, -1, 15, this);
         mLocationManagerProxy.setGpsEnable(false);
 
+
     }
 
     private void stopLocation() {
@@ -170,6 +175,16 @@ public class LocationActivity extends Activity implements AMapLocationListener {
                     .append(aMapLocation.getPoiName()).append(",").append(aMapLocation.getPoiId()).append(",").append(aMapLocation.getProvince()).append(",")
                     .append(aMapLocation.getRoad()).append(",");
             LogUtil.e("AMapLocation", b.toString());
+
+            /**
+             * 注册天气监听
+             */
+            mLocationManagerProxy = LocationManagerProxy.getInstance(this);
+            mLocationManagerProxy.requestWeatherUpdates(
+                    LocationManagerProxy.WEATHER_TYPE_LIVE, this);
+            mLocationManagerProxy.requestWeatherUpdates(
+                    LocationManagerProxy.WEATHER_TYPE_FORECAST, this);
+
         } else {
             ToastUtil.show(LocationActivity.this, "定位失败，请重试!");
         }
@@ -193,6 +208,38 @@ public class LocationActivity extends Activity implements AMapLocationListener {
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    @Override
+    public void onWeatherLiveSearched(AMapLocalWeatherLive aMapLocalWeatherLive) {
+        if (aMapLocalWeatherLive != null && aMapLocalWeatherLive.getAMapException().getErrorCode() == 0) {
+            String city = aMapLocalWeatherLive.getCity();//城市
+            String weather = aMapLocalWeatherLive.getWeather();//天气情况
+            String windDir = aMapLocalWeatherLive.getWindDir();//风向
+            String windPower = aMapLocalWeatherLive.getWindPower();//风力
+            String humidity = aMapLocalWeatherLive.getHumidity();//空气湿度
+            String reportTime = aMapLocalWeatherLive.getReportTime();//数据发布时间
+            LogUtil.e("WeatherLive", city + "," + weather + "," + windDir + "," + windPower + "," + humidity + "," + reportTime);
+        } else {
+            // 获取天气预报失败
+            ToastUtil.show(LocationActivity.this, "获取天气预报失败:" + aMapLocalWeatherLive.getAMapException().getErrorMessage());
+        }
+    }
+
+    @Override
+    public void onWeatherForecaseSearched(AMapLocalWeatherForecast aMapLocalWeatherForecast) {
+        if (aMapLocalWeatherForecast != null && aMapLocalWeatherForecast.getAMapException().getErrorCode() == 0) {
+            AMapLocalDayWeatherForecast forcast = aMapLocalWeatherForecast.getWeatherForecast().get(0);
+            String city = forcast.getCity();
+            String today = "今天 ( " + forcast.getDate() + " )";
+            String todayWeather = forcast.getDayWeather() + "    "
+                    + forcast.getDayTemp() + "/" + forcast.getNightTemp()
+                    + "    " + forcast.getDayWindPower();
+            LogUtil.e("DayWeatherForecast", city + today + todayWeather);
+        } else {
+            // 获取天气预报失败
+            ToastUtil.show(LocationActivity.this, "获取天气预报失败:" + aMapLocalWeatherForecast.getAMapException().getErrorMessage());
+        }
     }
 
 

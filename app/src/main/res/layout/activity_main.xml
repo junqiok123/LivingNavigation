@@ -116,7 +116,7 @@
                         android:src="@drawable/ic_global_arrow_right_2px" />
                 </LinearLayout>
 
-                <com.jq.livingnavigation.view.ProgressWebView
+                <WebView
                     android:id="@+id/hello_world"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
