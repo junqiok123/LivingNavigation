@@ -39,6 +39,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
     compile 'com.android.support:support-v4:23.0.0'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
     compile project(':inboxlibrary')
     compile files('libs/BaiduLBS_Android.jar')
     compile 'com.google.code.gson:gson:2.3.1'
